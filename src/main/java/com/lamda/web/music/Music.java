@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-//ddd
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
