@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.swing.*;
+import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,6 +17,7 @@ public class ProxyController{
     @Autowired Box<Object> box;
     @Autowired Crawler crawler;
     @Autowired Proxy pxy;
+    @Autowired FileUploader loader;
 
     @PostMapping("/bugsmusic")
     public HashMap<String, Object> bugsmusic(@RequestBody String searchWord){
@@ -26,5 +29,13 @@ public class ProxyController{
         pxy.print("조회 수 : " + list.size());
         box.put("count", list.size());
         return box.get();
+    }
+
+    @PostMapping("/soccer")
+    public HashMap<String, Object> soccer(@RequestBody String searchWord){
+        pxy.print("넘어온 키워드 : " + searchWord);
+
+
+        return null;
     }
 }

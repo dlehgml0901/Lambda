@@ -1,20 +1,22 @@
-package com.lamda.web.mappers;
+package com.lamda.web.soccer;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
-@AllArgsConstructor
+@Component
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "player_2")
+@Entity(name = "player")
 public class Player {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long playerId;
+    private Long playerNo;
     @Column(length = 20, nullable = false)
-    private String player_name;
+    private String playerId;
     @Column(length = 10, nullable = false)
-    private String team_id;
+    private String player_name;
     @Column(length = 40, nullable = false)
     private String e_player_name;
     @Column(length = 30, nullable = false)
@@ -36,11 +38,11 @@ public class Player {
     @Column(length = 10, nullable = false)
     private String weight;
     @Builder
-    public Player(String player_name, String team_id, String e_player_name,
+    public Player(String playerId, String player_name, String e_player_name,
                   String nickname, String join_yyyy, String position, String back_no,
                   String nation, String birth_date, String solar, String height, String weight){
+        this.playerId = playerId;
         this.player_name = player_name;
-        this.team_id = team_id;
         this.e_player_name = e_player_name;
         this.nickname = nickname;
         this.join_yyyy = join_yyyy;
@@ -52,5 +54,7 @@ public class Player {
         this.height = height;
         this.weight = weight;
     }
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id") @NotNull
+    private Team team;
 }
