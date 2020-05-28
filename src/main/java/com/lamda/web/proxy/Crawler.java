@@ -1,23 +1,25 @@
 package com.lamda.web.proxy;
 
+import com.lamda.web.Movie.Movie;
+import com.lamda.web.Movie.MovieRepository;
+import com.lamda.web.music.Music;
+import com.lamda.web.music.MusicRepository;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 @Component("crawler") @Lazy
 public class Crawler extends Proxy{
-    @Autowired Inventory<HashMap<String, String>> inventory;
+    @Autowired Inventory<Music> inventory;
     @Autowired Box<String> box;
+    @Autowired MusicRepository musicRepository;
+    @Autowired MovieRepository movieRepository;
 
-    public ArrayList<HashMap<String, String>> bugsMusic(){
+    public void bugsMusic(){
         inventory.clear();
         try {
             String url = "https://music.bugs.co.kr/chart";
@@ -28,20 +30,45 @@ public class Crawler extends Proxy{
             Elements title = d.select("p.title");
             Elements artist = d.select("p.artist");
             Elements thumbnail = d.select("a.thumbnail");
-            HashMap<String, String> map = null;
+            Music music = null;
             for (int i=0; i< title.size(); i++){
-                map = new HashMap<>();
-                map.put("seq", string(i+1));
-                map.put("title", title.get(i).text());
-                map.put("artist", artist.get(i).text());
-                map.put("thumbnail", thumbnail.get(i).select("img").attr("src"));
-                inventory.add(map);
+                music = new Music();
+                music.setSeq(string(i+1));
+                music.setTitle(title.get(i).text());
+                music.setArtist(artist.get(i).text());
+                music.setThumbnail(thumbnail.get(i).select("img").attr("src"));
+                musicRepository.save(music);
             }
         }catch (Exception e){
             print("에러 발생");
         }
-        print("*************************** 크롤링 결과 ****************************");
-        inventory.get().forEach(System.out::print);
-        return inventory.get();
+        print("*************************** 크롤링 결과 ****************************\n");
+        //inventory.get().forEach(System.out::print);
+//        print(inventory.get().get(0).toString());
     }
+
+    public void navermovie(){
+        inventory.clear();
+        try {
+            String url = "https://movie.naver.com/movie/sdb/rank/rmovie.nhn";
+            Connection.Response homepage = Jsoup.connect(url).method(Connection.Method.GET)
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36")
+                    .execute();
+            Document d = homepage.parse();
+
+            Elements ac = d.select("td.ac");
+            Elements tit3 = d.select("div.tit3");
+            Movie movie = null;
+            for (int i=0; i< ac.size(); i++){
+                movie = new Movie();
+                movie.setRanking(ac.get(i).select("img").attr("src"));
+                movie.setMovieName(tit3.get(i).text());
+                movieRepository.save(movie);
+            }
+        }catch (Exception e){
+            print("에러 발생");
+        }
+        print("*************************** 크롤링 결과 ****************************\n");
+    }
+
 }

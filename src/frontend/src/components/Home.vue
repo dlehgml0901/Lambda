@@ -41,12 +41,13 @@
             search(){
                 switch (this.searchWord) {
                     case "벅스차트":
-                        alert('1')
                         this.$store.dispatch('crawling/search', this.searchWord)
                         break;
                     case "축구":
-                        alert('2')
                         this.$store.dispatch('soccer/search', this.searchWord)
+                        break;
+                    case "네이버영화":
+                        this.$store.dispatch('naver/search', this.searchWord)
                         break;
                 }
 

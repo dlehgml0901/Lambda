@@ -19,8 +19,8 @@ const actions = {
                 router.push("/retrieve");
             })
             .catch(() => {
-                alert("통신 실패 !");
-            });
+                alert("통신 실패 1");
+            })
     }
 }
 const mutations = {

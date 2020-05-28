@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Retrieve from "../components/Retrieve";
 import Home from "../components/Home";
+import NaverMovie from "../components/NaverMovie";
 
 Vue.use(VueRouter);
 
@@ -10,6 +11,7 @@ export default new VueRouter({
     base: process.env.BASE_URL,
     routes: [
         { path: "/", component: Home },
-        { path: "/retrieve", component: Retrieve }
+        { path: "/retrieve", component: Retrieve },
+        { path: "/navermovie", component: NaverMovie }
     ]
 });

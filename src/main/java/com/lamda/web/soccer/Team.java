@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Component
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "team")
 public class Team {
@@ -61,11 +60,11 @@ public class Team {
         this.homepage = homepage;
         this.team_owner = team_owner;
     }
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "teamOfPlayer")
     private List<Player> players;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stadium_id") @NotNull
-    private Stadium stadium;
+    private Stadium stadiumOfTeam;
 
 }

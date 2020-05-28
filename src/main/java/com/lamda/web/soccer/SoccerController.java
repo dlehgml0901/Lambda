@@ -11,8 +11,5 @@ import java.util.HashMap;
 @CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 @RestController
 public class SoccerController {
-    @Autowired Player player;
-    @Autowired Team team;
-    @Autowired Stadium stadium;
-    @Autowired Schedule schedule;
+
 }

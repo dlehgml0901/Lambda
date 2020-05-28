@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Component
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "stadium")
 public class Stadium {
@@ -38,9 +37,9 @@ public class Stadium {
         this.ddd = ddd;
         this.tel = tel;
     }
-    @OneToMany(mappedBy = "stadium")
+    @OneToMany(mappedBy = "stadiumOfTeam")
     private List<Team> teams;
 
-    @OneToMany(mappedBy = "stadium")
+    @OneToMany(mappedBy = "stadiumOfSchedule")
     private List<Schedule> schedules;
 }

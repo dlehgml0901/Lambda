@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
-@Component
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "schedule")
 public class Schedule {
@@ -37,5 +36,5 @@ public class Schedule {
     }
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stadium_id") @NotNull
-    private Stadium stadium;
+    private Stadium stadiumOfSchedule;
 }
