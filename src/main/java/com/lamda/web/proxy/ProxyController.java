@@ -23,12 +23,19 @@ public class ProxyController{
     @Autowired MusicRepository musicRepository;
     @Autowired MovieRepository movieRepository;
 
+    @GetMapping("/navermovie/{searchWord}")
+    public void navermovie(@PathVariable String searchWord){
+        pxy.print("넘어온 키워드: "+searchWord);
+        crawler.navermovie();
+    }
+
     @PostMapping("/bugsmusic")
     public HashMap<String, Object> bugsmusic(@RequestBody String searchWord){
         pxy.print("넘어온 키워드 : " + searchWord);
         box.clear();
         if (musicRepository.count() == 0) crawler.bugsMusic();
         List<Music> list = musicRepository.findAll();
+        pxy.print("count :"+list.size());
         box.put("list", list);
         box.put("count", list.size());
         return box.get();
@@ -39,15 +46,5 @@ public class ProxyController{
         pxy.print("넘어온키워드: "+ searchWord);
         uploader.upload();
         return null;
-    }
-    @GetMapping("/navermovie/{searchWord}")
-    public HashMap<String, Object> navermovie(@RequestBody String searchWord){
-        pxy.print("넘어온 키워드 : " + searchWord);
-        box.clear();
-        if (movieRepository.count() == 0) crawler.navermovie();
-        List<Movie> list = movieRepository.findAll();
-        box.put("list", list);
-        box.put("count", list.size());
-        return box.get();
     }
 }

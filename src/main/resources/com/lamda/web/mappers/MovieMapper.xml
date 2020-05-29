@@ -1,0 +1,35 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lamda.web.mappers.MovieMapper">
+    <insert id="insertMovie"
+            parameterType="com.lamda.web.muvic.MovieDTO">
+        insert into movie (rank, movie_name, rank_date)
+        values (#{rank},#{movie_name},#{rank_date})
+    </insert>
+
+    <update id="updateMovie"
+            parameterType="com.lamda.web.muvic.MovieDTO">
+
+    </update>
+
+    <delete id="deleteMovie"
+            parameterType="domain.blog.Author">
+
+    </delete>
+    <select id="selectMovies" resultType="com.lamda.web.muvic.MovieDTO">
+      select movie_no, rank, movie_name, rank_date
+      from movie
+      where movie_no = #{movie_no}
+    </select>
+    <select id="selectMovie" resultType="User">
+      select id, username, password
+      from users
+      where id = #{id}
+    </select>
+    <select id="countMovies" resultType="User">
+      select id, username, password
+      from users
+      where id = #{id}
+    </select>
+</mapper>

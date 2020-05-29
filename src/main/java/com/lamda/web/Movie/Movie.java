@@ -10,8 +10,9 @@ import javax.persistence.*;
 public class Movie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long movieNo;
-    @Column(length = 4) private String ranking;
-    @Column(length = 50) private String movieName;
+    @Column(length = 4) private String rank;
+    @Column(length = 100) private String movieName;
+    @Column(length = 10) private String rankDate;
 
     public Movie(){}
 
@@ -23,13 +24,9 @@ public class Movie {
         this.movieNo = movieNo;
     }
 
-    public String getRanking() {
-        return ranking;
-    }
+    public String getRank() { return rank; }
 
-    public void setRanking(String ranking) {
-        this.ranking = ranking;
-    }
+    public void setRank(String rank) { this.rank = rank; }
 
     public String getMovieName() {
         return movieName;
@@ -39,18 +36,24 @@ public class Movie {
         this.movieName = movieName;
     }
 
+    public String getRankDate() { return rankDate; }
+
+    public void setRankDate(String rankDate) { this.rankDate = rankDate; }
+
     @Override
     public String toString() {
         return "Movie{" +
                 "movieNo=" + movieNo +
-                ", ranking='" + ranking + '\'' +
+                ", rank='" + rank + '\'' +
                 ", movieName='" + movieName + '\'' +
+                ", rankDate='" + rankDate + '\'' +
                 '}';
     }
 
     @Builder
-    public Movie(String ranking, String movieName){
-        this.ranking = ranking;
+    public Movie(String rank, String movieName, String rankDate){
+        this.rank = rank;
         this.movieName = movieName;
+        this.rankDate = rankDate;
     }
 }

@@ -1,4 +1,4 @@
-package com.lamda.web.soccer;
+package com.lamda.web.mappers;
 
 import org.springframework.stereotype.Repository;
 

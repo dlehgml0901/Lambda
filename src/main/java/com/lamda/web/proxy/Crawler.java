@@ -48,21 +48,20 @@ public class Crawler extends Proxy{
     }
 
     public void navermovie(){
-        inventory.clear();
         try {
             String url = "https://movie.naver.com/movie/sdb/rank/rmovie.nhn";
             Connection.Response homepage = Jsoup.connect(url).method(Connection.Method.GET)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36")
                     .execute();
             Document d = homepage.parse();
-
-            Elements ac = d.select("td.ac");
-            Elements tit3 = d.select("div.tit3");
+            Elements arr = d.select("div.tit3");
+            Elements date = d.select("p.r_date");
             Movie movie = null;
-            for (int i=0; i< ac.size(); i++){
+            for (int i=0; i< arr.size(); i++){
                 movie = new Movie();
-                movie.setRanking(ac.get(i).select("img").attr("src"));
-                movie.setMovieName(tit3.get(i).text());
+                movie.setRank(string(i+1));
+                movie.setMovieName(arr.get(i).text());
+                movie.setRankDate(date.get(0).text());
                 movieRepository.save(movie);
             }
         }catch (Exception e){

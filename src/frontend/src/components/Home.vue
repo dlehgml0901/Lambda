@@ -47,7 +47,7 @@
                         this.$store.dispatch('soccer/search', this.searchWord)
                         break;
                     case "네이버영화":
-                        this.$store.dispatch('naver/search', this.searchWord)
+                        this.$store.dispatch('crawling/search', this.searchWord)
                         break;
                 }
 

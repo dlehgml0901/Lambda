@@ -6,32 +6,48 @@ const state = {
     count : 0
 }
 const actions = {
-    async search({ commit }, searchWord) {
+    async search({commit}, searchWord) {
         alert("검색어: " + searchWord);
-        axios
-            .post(state.context + `bugsmusic`, searchWord, {
-                authorization: "JWT fefege..",
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            })
-            .then(({ data }) => {
-                commit("SEARCH", data);
-                router.push("/retrieve");
-            })
-            .catch(() => {
-                alert("통신 실패 1");
-            })
+        switch (searchWord) {
+            case '네이버영화' :
+                axios
+                    .get(state.context + `navermovie/${searchWord}`)
+                    .then(() => {
+                    })
+                    .catch(() => {
+                    })
+                break
+            case '벅스뮤직' :
+                axios
+                    .post(state.context + `bugsmusic`, searchWord, {
+                        authorization: "JWT fefege..",
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    })
+                    .then(({data}) => {
+                        commit("SEARCH", data);
+                        router.push("/retrieve");
+                    })
+                    .catch(() => {
+                        alert("통신 실패 !");
+                    });
+                break
+        }
     }
 }
 const mutations = {
-    SEARCH(state, data){
-        alert("뮤테이션에서 결과 수 : " + data.count)
+    SEARCH(state, data) {
+        alert("뮤데이션에서 결과 수 : " + data.count);
         state.bugsmusic = [];
         state.count = data.count;
-        data.list.forEach(
-            item => {
-                state.bugsmusic.push([item.seq,item.thumbnail,item.title,item.artist])}
-            );
+        data.list.forEach(item => {
+            state.bugsmusic.push({
+                seq: item.seq,
+                artist: item.artists,
+                title: item.title,
+                thumbnail: item.thumbnail
+            });
+        });
     }
 };
 const getters = {
@@ -45,4 +61,4 @@ export default {
     actions,
     mutations,
     getters
-}
+};
